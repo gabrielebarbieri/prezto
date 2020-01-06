@@ -11,3 +11,57 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+# Path
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/gabriele/bin:/usr/local/sbin":$PATH
+
+# History
+HISTFILE=~/.histfile
+HISTSIZE=8192
+SAVEHIST=8192
+setopt append_history
+setopt hist_expire_dups_first
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history
+
+# Arrow History Management
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '\eOA' up-line-or-beginning-search
+bindkey '\e[A' up-line-or-beginning-search
+bindkey '\eOB' down-line-or-beginning-search
+bindkey '\e[B' down-line-or-beginning-search
+
+# Completion
+setopt autocd
+zstyle :compinstall filename '~/.zshrc'
+
+# folder of all of your autocomplete functions
+fpath=($HOME/.zsh-completions $fpath)
+autoload -Uz compinit && compinit
+
+# Delete .pyc files in the current folder and in all the subfolders
+alias delpyc='find . -name \*.pyc -delete'
+
+# Open pycharm
+alias pycharm='open -a PyCharm\ CE'
+
+# Sign in to aws
+alias aws-login='open https://qucit.signin.aws.amazon.com/console'
+
+# Jupyter
+alias jn='jupyter-notebook .'
+# alias jupyter-style = 'jt -t oceans16 -f roboto -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T'
+
+# Virtualenv
+alias mkenv='mkvirtualenv $(basename $(pwd))'
+alias mkenv3='mkvirtualenv --python=$(which python3) $(basename $(pwd))'
+
+# Locale settings, needed by pipenv
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# added by travis gem
+[ -f /Users/gabriele/.travis/travis.sh ] && source /Users/gabriele/.travis/travis.sh
